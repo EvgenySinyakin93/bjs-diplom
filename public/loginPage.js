@@ -21,7 +21,7 @@ const userForm = new UserForm();//Создайте объект класса Use
             if(response.success) { //Передайте в запрос авторизации функцию, которая будет выполняться при попытке авторизации.
                 location.reload(); //В случае успеха запроса обновите страницу (с помощью location.reload();).
             } else{
-                userForm.setLoginErrorMessage(response.error);
+                userForm.setRegisterErrorMessage(response.error);
             }
         })
      }
