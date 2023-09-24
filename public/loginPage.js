@@ -7,7 +7,7 @@ const userForm = new UserForm();//Создайте объект класса Use
 
     
     userForm.loginFormCallback = (data) => { //Присвойте свойству loginFormCallback созданного...
-        ApiConnector.login(data, response => { //Функция должна выполнять запрос на сервер для попытки авторизации пользователя
+        ApiConnector.login(data, (response) => { //Функция должна выполнять запрос на сервер для попытки авторизации пользователя
             if(response.success) { //Передайте в запрос авторизации функцию, которая будет выполняться при попытке авторизации.
                 location.reload(); //В случае успеха запроса обновите страницу (с помощью location.reload();).
             } else{
@@ -17,7 +17,7 @@ const userForm = new UserForm();//Создайте объект класса Use
     }
 
      userForm.registerFormCallback = (data) => {
-        ApiConnector.login(data, response => { //Функция должна выполнять запрос на сервер для попытки авторизации пользователя
+        ApiConnector.login(data, (response) => { //Функция должна выполнять запрос на сервер для попытки авторизации пользователя
             if(response.success) { //Передайте в запрос авторизации функцию, которая будет выполняться при попытке авторизации.
                 location.reload(); //В случае успеха запроса обновите страницу (с помощью location.reload();).
             } else{
