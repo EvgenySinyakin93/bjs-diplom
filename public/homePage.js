@@ -20,22 +20,30 @@ const moneyManager = new MoneyManager();
 
 moneyManager.addMoneyCallback = function(data){
   ApiConnector.addMoney(data, (response) => {
-      showMessage(response);
+      message(response);
   });
 };
 
 function message(response){
   if (response.success){
       ProfileWidget.showProfile(response.data);
-      money.setMessage(true, String("Операция прошла успешно"));
+      moneyManager.setMessage(response.success, "Операция прошла успешно");
   } else {
-      money.setMessage(false, String(response.error + "Ошибка в операции"));
+      moneyManager.setMessage(response.success, response.error);
   };
 };
 
 //Реализуйте конвертирование валюты
-money.conversionMoneyCallback = function(data){
+moneyManager.conversionMoneyCallback = function(data){
   ApiConnector.convertMoney(data, (response) => {
-      showMessage(response);
+      message(response);
+  });  
+};
+
+//Реализуйте перевод валюты:
+
+moneyManager.sendMoneyCallback = function(data){
+  ApiConnector.transferMoney(data, (response) => {
+      message(response);
   });  
 };
