@@ -4,7 +4,8 @@ const ratesBoard = new RatesBoard(); //Создайте объект типа Ra
 let courseRequest = function () {
   ApiConnector.getStocks((response) => {
     if (response.success) {
-      ratesBoard.clearTable(), ratesBoard.fillTable(response.data);
+      ratesBoard.clearTable();
+      ratesBoard.fillTable(response.data);
     }
   });
 };
@@ -27,7 +28,7 @@ moneyManager.addMoneyCallback = function(data){
 function message(response){
   if (response.success){
       ProfileWidget.showProfile(response.data);
-      moneyManager.setMessage(response.success, "Операция прошла успешно");
+      moneyManager.setMessage(response.success);
   } else {
       moneyManager.setMessage(response.success, response.error);
   };
@@ -46,4 +47,47 @@ moneyManager.sendMoneyCallback = function(data){
   ApiConnector.transferMoney(data, (response) => {
       message(response);
   });  
+};
+
+//Работа с избранным
+
+//Создайте объект типа FavoritesWidget
+const favoritesWidget = new FavoritesWidget();
+
+//Запросите начальный список избранного
+ApiConnector.getFavorites(response => {
+  if(response.success){
+      favoritesWidget.clearTable();
+      favoritesWidget.fillTable(response.data);
+      moneyManager.updateUsersList(response.data)
+     
+  } 
+});
+
+//Реализуйте добавления пользователя в список избранных
+favoritesWidget.addUserCallback = (data) => {
+  ApiConnector.addUserToFavorites(data, (response) => {
+      if(response.success){
+          favoritesWidget.clearTable();
+          favoritesWidget.fillTable(response.data);
+          moneyManager.updateUsersList(response.data)
+          favoritesWidget.setMessage(response.success);
+      } else {
+          favoritesWidget.setMessage(response.success, response.error);
+      } 
+  })
+};
+
+//Реализуйте удаление пользователя из избранного
+favoritesWidget.removeUserCallback = (data) => {
+  ApiConnector.removeUserFromFavorites(data, (response) => {
+    if(response.success){
+          favoritesWidget.clearTable();
+          favoritesWidget.fillTable(response.data);
+          moneyManager.updateUsersList(response.data)
+          favoritesWidget.setMessage(response.success);
+      } else {
+          favoritesWidget.setMessage(response.success, response.error);
+      }
+  });
 };
