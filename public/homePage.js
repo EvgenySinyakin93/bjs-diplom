@@ -28,7 +28,7 @@ moneyManager.addMoneyCallback = function(data){
 function message(response){
   if (response.success){
       ProfileWidget.showProfile(response.data);
-      moneyManager.setMessage(response.success);
+      moneyManager.setMessage(response.success, "Баланс успешно пополнен на");
   } else {
       moneyManager.setMessage(response.success, response.error);
   };
@@ -60,7 +60,6 @@ ApiConnector.getFavorites(response => {
       favoritesWidget.clearTable();
       favoritesWidget.fillTable(response.data);
       moneyManager.updateUsersList(response.data)
-     
   } 
 });
 
@@ -71,7 +70,7 @@ favoritesWidget.addUserCallback = (data) => {
           favoritesWidget.clearTable();
           favoritesWidget.fillTable(response.data);
           moneyManager.updateUsersList(response.data)
-          favoritesWidget.setMessage(response.success);
+          favoritesWidget.setMessage(response.success, "Добавлении пользователя в окне отображения сообщения выполнен успешно");
       } else {
           favoritesWidget.setMessage(response.success, response.error);
       } 
@@ -85,7 +84,7 @@ favoritesWidget.removeUserCallback = (data) => {
           favoritesWidget.clearTable();
           favoritesWidget.fillTable(response.data);
           moneyManager.updateUsersList(response.data)
-          favoritesWidget.setMessage(response.success);
+          favoritesWidget.setMessage(response.success, "Удаление пользователя выполнен успешно");
       } else {
           favoritesWidget.setMessage(response.success, response.error);
       }
